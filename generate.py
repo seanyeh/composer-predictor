@@ -9,6 +9,11 @@ import features as features_lib
 
 # All functions (excluding those starting with _) are feature functions
 def get_features():
+
+    # Hey look, it's a smiley face --------
+    #                                     |
+    #                                     v
+
     return list(filter(lambda x: x[0] != "_", dir(features_lib)))
 
 
