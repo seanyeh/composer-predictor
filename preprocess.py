@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import argparse
 import os
 import shutil
 import sys
@@ -45,6 +46,7 @@ def write_files(piece_obj, composer, piece_name, output_dir="data/preprocessed")
 
         counter += 1
 
+
 def run():
     preprocessed_dir = "data/preprocessed"
     raw_dir = "data/raw"
@@ -75,5 +77,13 @@ def run():
             write_files(piece_obj, composer=composer, piece_name=friendly_piece_name)
 
 
-if __name__ == "__main__":
+def main():
+    description = ("Split each data file into multiple melodic examples"
+                   " and ouptut them as MusicXML files")
+    parser = argparse.ArgumentParser(__file__, description=description)
+    args = parser.parse_args()
     run()
+
+
+if __name__ == "__main__":
+    main()
