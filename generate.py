@@ -17,12 +17,19 @@ def get_features():
     return list(filter(lambda x: x[0] != "_", dir(features_lib)))
 
 
-def generate_dataframe(preprocessed_dir):
+def split_arr(arr, ratio=0.7):
+    index = int(len(arr) * ratio)
+    return arr[:index], arr[index:]
+
+
+def generate_dataframes(preprocessed_dir):
     composers = os.listdir(preprocessed_dir)
 
     feature_names = get_features()
-    examples = []
+    examples_train = []
+    examples_test = []
     for composer in composers:
+        examples_temp = []
         composer_dir = os.path.join(preprocessed_dir, composer)
         pieces = os.listdir(composer_dir)
 
@@ -35,19 +42,24 @@ def generate_dataframe(preprocessed_dir):
                 feature_func = getattr(features_lib, feature)
                 item[feature] = feature_func(piece_obj)
 
-            examples.append(item)
+            examples_temp.append(item)
 
-    return pandas.DataFrame(examples)
+        # Split examples_temp into training and testing set
+        temp1, temp2 = split_arr(examples_temp)
+        examples_train += temp1
+        examples_test += temp2
+
+
+    return pandas.DataFrame(examples_train), pandas.DataFrame(examples_test)
 
 
 def run(output_dir, input_dir):
-    df = generate_dataframe(preprocessed_dir=input_dir)
+    df_train, df_test = generate_dataframes(preprocessed_dir=input_dir)
 
-    rows = len(df)
-
-    # TODO: split into training and testing sets for each composer.
-    #
-    # df.to_csv(output_file)
+    # write them to csv
+    filename = os.path.join(output_dir, "data_%s.csv")
+    df_train.to_csv(filename % "train")
+    df_test.to_csv(filename % "test")
 
 
 def main():
