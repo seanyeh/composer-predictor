@@ -69,6 +69,7 @@ def run():
 
         for piece_name in pieces:
             filename = os.path.join(composer_dir, piece_name)
+            print("Reading: %s" % filename)
             piece_obj = music21.converter.parse(filename)
 
             # Create a friendly piece name (w/o file extension)
