@@ -23,7 +23,7 @@ def get_notes(piece):
     measures = filter(lambda x: isinstance(x, music21.stream.Measure), part.elements)
 
     # add all the notes from all the measures
-    notes = reduce(operator.add, map(lambda x: x.notes, measures))
+    notes = reduce(operator.add, map(lambda x: x.notes.elements, measures))
 
     return list(notes)
 
