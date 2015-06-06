@@ -70,6 +70,19 @@ def range_melody(piece):
 
 
 '''
+Feature: Chromaticism
+'''
+def chromaticism(piece):
+    notes = util.get_notes(piece)
+    note_values = list(map(lambda x: x.midi, notes))
+    is_chromatic = 0
+    for i in range(len(note_values)-2):
+        if ((note_values[i]-note_values[i+1] == 1) and (note_values[i+1]-note_values[i+2] == 1)) or ((note_values[i+2]-note_values[i+1] == 1) and (note_values[i+1]-note_values[i] == 1)):
+            is_chromatic = 1
+    return is_chromatic
+
+
+'''
 Create list of features
     (must stay at bottom of file)
 '''
