@@ -60,6 +60,13 @@ def rhythmic_variety(piece):
 Feature: Leaps ratio
 '''
 
+'''
+Feature: Range of melody
+'''
+def range_melody(piece):
+    notes = util.get_notes(piece)
+    note_values = list(map(lambda x: x.midi, notes))
+    return max(note_values)-min(note_values)
 
 
 '''
