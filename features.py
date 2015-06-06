@@ -46,6 +46,23 @@ def rhythmic_variance(piece):
 
 
 '''
+Feature: Rhythmic variety
+    Calculates the percentage (multiplied by 10) of notes that have different durations
+'''
+def rhythmic_variety(piece):
+    notes = util.get_notes(piece)
+    durations = list(map(lambda x: float(x.duration.quarterLength), notes))
+    num_durations = len(set(durations))
+    return 10 * num_durations / len(notes)
+
+
+'''
+Feature: Leaps ratio
+'''
+
+
+
+'''
 Create list of features
     (must stay at bottom of file)
 '''
