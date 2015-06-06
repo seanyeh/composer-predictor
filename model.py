@@ -38,7 +38,7 @@ def main():
                         nargs="?", default="data/data_test.csv",
                         help="Filename of testing data (csv format)")
 
-    parser.add_argument("--test", action="store_true",
+    parser.add_argument("-t", "--test", action="store_true",
                         help="Show prediction accuracy on test data")
 
     parser.add_argument("-c", "--cross-validate", action="store_true",
