@@ -7,14 +7,11 @@ import pandas
 
 import features as features_lib
 
-# All functions (excluding those starting with _) are feature functions
-# def get_features():
-#     # getmembers returns list of tuples (func_name, func)
-#     members = filter(lambda x: isfunction(x[1]) and x[0][0] != "_", getmembers(features_lib))
-#
-#     # only return names
-#     return list(map(lambda x: x[0], members))
+import util
 
+
+# Minimum number of notes in example
+MIN_NOTES = 4
 
 def split_arr(arr, ratio=0.7):
     index = int(len(arr) * ratio)
@@ -36,6 +33,11 @@ def generate_dataframes(preprocessed_dir):
             filename = os.path.join(composer_dir, piece_name)
             piece_obj = music21.converter.parse(filename)
             item = {"composer": composer, "filename": piece_name}
+
+            # skip piece_obj's that are too short
+            num_notes = len(util.get_notes(piece_obj))
+            if num_notes < MIN_NOTES:
+                continue
 
             for feature in feature_names:
                 feature_func = getattr(features_lib, feature)

@@ -4,20 +4,10 @@ import argparse
 import os
 import shutil
 import sys
+
 import music21
 
-
-def get_top_line(piece):
-    top_part = piece.parts[0]
-    if len(top_part.voices) > 0:
-        top_part = top_part.voices[0]
-
-    # replace all chords with top note of chord
-    for item in top_part.notes:
-        if isinstance(item, music21.chord.Chord):
-            top_part.notes.replace(item, item[0])
-    return top_part
-
+import util
 
 def write_files(piece_obj, composer, piece_name, output_dir="data/preprocessed"):
     output_dir = os.path.join(output_dir, composer)
@@ -28,7 +18,7 @@ def write_files(piece_obj, composer, piece_name, output_dir="data/preprocessed")
         pass
 
 
-    top_line = get_top_line(piece_obj)
+    top_line = util.get_top_line(piece_obj)
 
     # create measures
     top_line.makeMeasures(inPlace=True)

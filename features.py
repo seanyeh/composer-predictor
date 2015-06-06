@@ -6,8 +6,10 @@ import sys
 
 from functools import reduce
 
-
+import numpy
 import music21
+
+import util
 
 '''
 Write all your feature-evaluating functions in this file.
@@ -23,19 +25,24 @@ def my_favorite_feature(piece):
 
 '''
 
-def _get_notes(piece):
-    part = piece.parts[0]
-    measures = filter(lambda x: isinstance(x, music21.stream.Measure), part.elements)
 
-    # add all the notes from all the measures
-    notes = reduce(operator.add, map(lambda x: x.notes, measures))
-
-    return list(notes)
-
-
+'''
+Feature: Number of notes in sample (a.k.a note density)
+'''
 def num_notes(piece):
-    return len(_get_notes(piece))
+    return len(util.get_notes(piece))
 
+
+'''
+Feature: Rhythmic variance
+    Calculates the variance of the durations of the notes
+'''
+def rhythmic_variance(piece):
+    notes = util.get_notes(piece)
+    durations = list(map(lambda x: float(x.duration.quarterLength), notes))
+    mean = numpy.mean(durations)
+    sq_diff = reduce(lambda acc, x: acc + (x - mean) * (x - mean), durations)
+    return sq_diff / len(notes)
 
 
 '''
