@@ -11,4 +11,4 @@ Our attempt to use machine learning to predict the composer of a musical piece.
 2. Evaluate features on each example by running `./generate.py`. This will store the results into two csv files: one for training and the other for testing
 3. Create model and show prediction accuracy on testing data and/or show cross-validation scores by running `./model.py` with the `--test` and/or the `--cross-validation` flags.
 
-As always, you can always run any of these files with the `---help` flag for more information.
+As always, you can always run any of these files with the `--help` flag for more information.
