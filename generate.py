@@ -8,13 +8,12 @@ import pandas
 import features as features_lib
 
 # All functions (excluding those starting with _) are feature functions
-def get_features():
-
-    # Hey look, it's a smiley face --------
-    #                                     |
-    #                                     v
-
-    return list(filter(lambda x: x[0] != "_", dir(features_lib)))
+# def get_features():
+#     # getmembers returns list of tuples (func_name, func)
+#     members = filter(lambda x: isfunction(x[1]) and x[0][0] != "_", getmembers(features_lib))
+#
+#     # only return names
+#     return list(map(lambda x: x[0], members))
 
 
 def split_arr(arr, ratio=0.7):
@@ -25,7 +24,7 @@ def split_arr(arr, ratio=0.7):
 def generate_dataframes(preprocessed_dir):
     composers = os.listdir(preprocessed_dir)
 
-    feature_names = get_features()
+    feature_names = features_lib.FEATURES
     examples_train = []
     examples_test = []
     for composer in composers:
