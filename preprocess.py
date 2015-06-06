@@ -9,6 +9,8 @@ import music21
 
 def get_top_line(piece):
     top_part = piece.parts[0]
+    if len(top_part.voices) > 0:
+        top_part = top_part.voices[0]
 
     # replace all chords with top note of chord
     for item in top_part.notes:
