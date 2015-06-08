@@ -2,6 +2,7 @@
 
 import argparse
 
+import numpy
 import pandas
 
 from sklearn import svm, cross_validation
@@ -50,7 +51,9 @@ def main():
     x_train, y_train = load_XY(args.train_data)
     x_test, y_test = load_XY(args.test_data)
     if args.cross_validate:
-        print("Cross-validation scores:", cross_validate(x_train, y_train))
+        scores = cross_validate(x_train, y_train)
+        print("Cross-validation scores:", scores)
+        print("Cross-validation avg:", numpy.mean(scores))
 
     if args.test:
         print("Prediction accuracy on test data:",
