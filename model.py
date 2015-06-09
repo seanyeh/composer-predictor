@@ -71,7 +71,7 @@ def main():
     args = parser.parse_args()
 
 
-    features_list = list(filter(lambda x: x not in args.ignore_features, features.FEATURES))
+    features_list = [x for x in features.FEATURES if x not in args.ignore_features]
 
     x_train, y_train = load_XY(args.train_data, features_list)
     x_test, y_test = load_XY(args.test_data, features_list)
