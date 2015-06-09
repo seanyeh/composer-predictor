@@ -5,24 +5,40 @@ import argparse
 import numpy
 import pandas
 
-from sklearn import svm, cross_validation
+from sklearn import svm, cross_validation, ensemble
 
 import features
 
 
 
-def load_XY(filename):
+def load_XY(filename, features_list):
     df = pandas.read_csv(filename)
-    return df[features.FEATURES].values, df.composer.values
+    return df[features_list].values, df.composer.values
 
 
 def test(x_train, y_train, x_test, y_test):
     clf = svm.SVC().fit(x_train, y_train)
-    return clf.score(x_test, y_test)
+    score = clf.score(x_test, y_test)
+
+    print("\nPrediction accuracy on test data:", score)
 
 
 def cross_validate(x, y):
-    return cross_validation.cross_val_score(svm.SVC(), x, y, cv=5)
+    scores = cross_validation.cross_val_score(svm.SVC(), x, y, cv=5)
+    print("\nCross-validation scores:", scores)
+    print("Cross-validation avg:", numpy.mean(scores))
+
+
+def show_feature_importances(x, y, features_list):
+    print("\nFeature Importances:")
+    forest = ensemble.ExtraTreesClassifier(n_estimators=250, random_state=0)
+    forest.fit(x, y)
+
+    importances = list(zip(forest.feature_importances_, features_list))
+    # sort in place
+    importances.sort(key=lambda x: x[0], reverse=True)
+    for tup in importances:
+        print("%f: %s" % tup)
 
 
 
@@ -39,25 +55,35 @@ def main():
                         nargs="?", default="data/data_test.csv",
                         help="Filename of testing data (csv format)")
 
+    parser.add_argument("-i", "--ignore-features", type=lambda x:x.split(","),
+                        nargs="?", default=[],
+                        help="Comma-separated list of features to ignore")
+
     parser.add_argument("-t", "--test", action="store_true",
                         help="Show prediction accuracy on test data")
 
     parser.add_argument("-c", "--cross-validate", action="store_true",
                         help="Print cross-validation scores")
 
+    parser.add_argument("-f", "--feature-importances", action="store_true",
+                        help="Show feature importances")
+
     args = parser.parse_args()
 
 
-    x_train, y_train = load_XY(args.train_data)
-    x_test, y_test = load_XY(args.test_data)
+    features_list = list(filter(lambda x: x not in args.ignore_features, features.FEATURES))
+
+    x_train, y_train = load_XY(args.train_data, features_list)
+    x_test, y_test = load_XY(args.test_data, features_list)
+
     if args.cross_validate:
-        scores = cross_validate(x_train, y_train)
-        print("Cross-validation scores:", scores)
-        print("Cross-validation avg:", numpy.mean(scores))
+        cross_validate(x_train, y_train)
 
     if args.test:
-        print("Prediction accuracy on test data:",
-              test(x_train, y_train, x_test, y_test))
+        test(x_train, y_train, x_test, y_test)
+
+    if args.feature_importances:
+        show_feature_importances(x_train, y_train, features_list)
 
 
 
