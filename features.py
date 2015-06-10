@@ -5,6 +5,7 @@ import operator
 import sys
 
 from functools import reduce
+from scipy import stats
 
 import numpy
 import music21
@@ -58,7 +59,49 @@ def rhythmic_variety(piece):
 
 '''
 Feature: Leaps ratio
+    Calculates the ratio of leaps to steps. A leap is considered a distance greater than 2 (a major 2nd)
 '''
+def leaps_ratio(piece):
+    notes = util.get_notes(piece)
+    note_values = list(map(lambda x: x.midi, notes))
+    leaps = 0
+    steps = 0
+    for i in range(len(note_values)-1):
+        distance = abs(note_values[i+1]-note_values[i])
+        if distance > 2:
+            leaps += 1
+        else:
+            steps += 1
+    return leaps/(leaps+steps)
+
+
+'''
+Feature: Repeated notes
+    Finds the most repeated note and returns the number of times it appears in the sample
+'''
+def repeated_notes(piece):
+    notes = util.get_notes(piece)
+    note_values = list(map(lambda x: x.midi, notes))
+    return stats.mode(note_values)[1][0]
+
+
+'''
+Feature: Low notes
+    Finds how much of the melody is below a certain note. For now the middle note is set at 64 or an E that is above middle C
+'''
+def Low_notes(piece):
+    notes = util.get_notes(piece)
+    note_values = list(map(lambda x: x.midi, notes))
+    high = 0
+    low = 0
+    for i in range(len(note_values)):
+        if note_values[i] > 64:
+            high += 1
+        else:
+            low +=1
+    return low/(low+high)
+
+
 
 '''
 Feature: Range of melody
