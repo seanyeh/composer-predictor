@@ -21,7 +21,7 @@ Our results were fairly successful, but that was not too surprising given the sm
 
 ### Requirements
 - Python 3+
-- Various 3rd party libraries (see requirements.txt)
+- Various 3rd party libraries (see requirements.txt. Install with `pip install -r requirements.txt`)
 
 ### Basic Steps
 
