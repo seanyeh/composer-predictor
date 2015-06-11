@@ -17,6 +17,10 @@ Our results were fairly successful, but that was not too surprising given the sm
 ![features](features.png)
 (A look at two features)
 
+### Requirements
+- Python 3+
+- Various 3rd party libraries (see requirements.txt)
+
 ### Basic Steps
 
 1. Split each raw data file into multiple examples by running `./preprocess.py`. (this only needs to be run once, but no harm in running multiple times). The resulting data will be stored in `data/preprocessed/`
