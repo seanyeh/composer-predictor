@@ -1,10 +1,12 @@
 # Composer Predictor
-#####EECS 349
+#####Northwestern University - Machine Learning (EECS 349)
 ######Sean Yeh, seanyeh2014 [at] u.northwestern.edu
 ######Paul Juhn, pauljuhn2014 [at] u.northwestern.edu
 
 ### About
 Our attempt to use machine learning to predict the composer of a musical piece.
+
+![help](help.png)
 
 ### Synopsis
 Our task is to predict the composer of melodic fragments of musical pieces based on previous data from those specific composers.This task is important to see if similarities exist between composers and if they do, what makes them similar. On the other hand, we can also see what features makes a composer unique, which allows us to categorize that melody. There have also been times in history where a piece of classical music surfaces and the composer is unknown. With enough data, our composer predictor could classify such unknown works and give credit where it’s due.
