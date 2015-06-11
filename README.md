@@ -1,6 +1,7 @@
 # Composer Predictor
 #####EECS 349
-#####Sean Yeh and Paul Juhn
+######Sean Yeh, seanyeh2014 [at] u.northwestern.edu
+######Paul Juhn, pauljuhn2014 [at] u.northwestern.edu
 
 ### About
 Our attempt to use machine learning to predict the composer of a musical piece.
