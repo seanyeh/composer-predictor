@@ -17,6 +17,8 @@ Our results were fairly successful, but that was not too surprising given the sm
 ![features](features.png)
 (A look at two features)
 
+[Detailed report](ComposerPredictorWriteup.pdf)
+
 ### Requirements
 - Python 3+
 - Various 3rd party libraries (see requirements.txt)
