@@ -48,7 +48,30 @@ def show_feature_importances(x, y, features_list):
         print("%f: %s" % tup)
 
 
-
+# def graph(filename, features_list, classification="composer"):
+#     import matplotlib.pyplot as plt
+#     import matplotlib.patches as mpatches
+#
+#     df = pandas.read_csv(filename)
+#     assert len(features_list) >= 2
+#     x = df[features_list[0]].values
+#     y = df[features_list[1]].values
+#
+#     color = df[classification]
+#     classification_types = set(df[classification].tolist())
+#     for i, classification_type in enumerate(classification_types):
+#         color = color.replace(classification_type, i)
+#
+#     plt.scatter(x, y, c=color)
+#     plt.xlabel(features_list[0])
+#     plt.ylabel(features_list[1])
+#     patch1 = mpatches.Patch(color="r", label="Bach")
+#     patch2 = mpatches.Patch(color="b", label="Chopin")
+#     plt.legend(handles=[patch1,patch2])
+#     plt.xticks(())
+#     plt.yticks(())
+#     plt.show()
+#     plt.savefig("features.png")
 
 
 def main():
@@ -62,10 +85,11 @@ def main():
                         nargs="?", default="data/data_test.csv",
                         help="Filename of testing data (csv format)")
 
-    parser.add_argument("--algorithm", metavar="TEST_DATA",
+    algorithms_help = ",".join(AVAILABLE_ALGORITHMS.keys())
+    parser.add_argument("--algorithm", metavar="ALGORITHM_NAME",
                         nargs="?", default="ExtraTreesClassifier",
-                        help=("Name of algorithm to use. Available:"
-                        ",".join(AVAILABLE_ALGORITHMS.keys()) + ""
+                        help=("Name of algorithm to use. Available: "
+                        "" + algorithms_help + "."
                         " Default: ExtraTreesClassifier"))
 
     parser.add_argument("-i", "--ignore-features", type=lambda x:x.split(","),
